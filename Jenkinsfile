@@ -3,10 +3,10 @@ pipeline {
 
     environment {
         AWS_REGION = "us-east-1"
-        ECR_REPO = "193363646141.dkr.ecr.us-east-1.amazonaws.com/flask-app"
-        CLUSTER = "Flask-cluster"
-        SERVICE = "flask-service"
-        IMAGE_TAG = "latest"
+        ECR_REPO   = "193363646141.dkr.ecr.us-east-1.amazonaws.com/flask-app"
+        CLUSTER    = "Flask-cluster"
+        SERVICE    = "flask-service"
+        IMAGE_TAG  = "latest"
     }
 
     stages {
@@ -14,6 +14,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
+                    credentialsId: 'github-creds',
                     url: 'https://github.com/DharaniOps/flask-ecs-project.git'
             }
         }
@@ -57,10 +58,10 @@ pipeline {
 
         stage('Verify Deployment') {
             steps {
-                echo "Deployment triggered. ECS will start replacing old tasks."
-                echo "Please check ALB URL in console."
+                echo "Deployment triggered successfully!"
+                echo "Check ECS console → Service events for progress."
+                echo "Then open ALB DNS to confirm app update."
             }
         }
     }
 }
-
